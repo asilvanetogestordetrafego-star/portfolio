@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1220'/%3E%3Cpath d='M13 16H51L38 31V45L26 51V31Z' fill='%23E7ECF3'/%3E%3Ccircle cx='48' cy='48' r='7' fill='%23F2490F'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#090C11">
-<meta name="description" content="Aldo Barbosa — Gestor de Tráfego Pago e especialista em rastreamento. Um portfólio que mede a própria visita em tempo real.">
+<meta name="description" content="Aldo Barbosa — Gestor de Tráfego Pago e especialista em rastreamento. Meta Ads, Google Ads, GTM, GA4 e Pixel.">
 <!-- Google Tag Manager -->
 <script>window.dataLayer=window.dataLayer||[];(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -19,396 +19,286 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=JetBrains+Mono:wght@400;500;700&family=Onest:wght@400;500;600&display=swap">
 <style>
-/* Layout: o site é um funil instrumentado. Trilho do funil à esquerda, conteúdo no centro, painel de depuração ao vivo à direita, que registra a visita real de quem lê. */
+/* Layout: uma coluna limpa, alinhada à esquerda. O painel de eventos da visita fica recolhido num botão no canto e abre só quando a pessoa quer ver. */
 :root{
-  --bg:#EDF0F3; --paper:#FFFFFF; --ink:#0B1220; --muted:#5B6577; --line:#CDD4DD; --grid:rgba(11,18,32,.045);
-  --signal:#F2490F; --cobalt:#2443D6; --ok:#0B8A5C; --code-key:#2443D6; --code-str:#0B8A5C; --code-num:#B5480F;
+  --bg:#F3F4F6; --paper:#FFFFFF; --ink:#0B1220; --muted:#5B6577; --line:#D9DEE5;
+  --accent:#E8450E; --ok:#0B8A5C;
   --f-display:"Anybody","Arial Narrow",Impact,sans-serif;
   --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
-  --rail-l:212px; --rail-r:320px;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#090C11; --paper:#10151D; --ink:#E7ECF3; --muted:#8A95A7; --line:#212A36; --grid:rgba(231,236,243,.035);
-  --signal:#FF7340; --cobalt:#8DA2FF; --ok:#3ECB8F; --code-key:#8DA2FF; --code-str:#3ECB8F; --code-num:#FFA071; color-scheme:dark}}
+  --bg:#0A0D12; --paper:#121821; --ink:#E7ECF3; --muted:#8C97A8; --line:#222B37;
+  --accent:#FF7340; --ok:#3ECB8F; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#090C11; --paper:#10151D; --ink:#E7ECF3; --muted:#8A95A7; --line:#212A36; --grid:rgba(231,236,243,.035);
-  --signal:#FF7340; --cobalt:#8DA2FF; --ok:#3ECB8F; --code-key:#8DA2FF; --code-str:#3ECB8F; --code-num:#FFA071; color-scheme:dark}
+  --bg:#0A0D12; --paper:#121821; --ink:#E7ECF3; --muted:#8C97A8; --line:#222B37;
+  --accent:#FF7340; --ok:#3ECB8F; color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
-a{color:var(--cobalt)}
-:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
-h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;line-height:.98}
-.mono{font-family:var(--f-mono)}
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;line-height:1}
+.wrap{max-width:1040px;margin:0 auto}
 
-.shell{display:grid;grid-template-columns:var(--rail-l) minmax(0,1fr) var(--rail-r);min-height:100vh}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:24px}
+.brand{font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 140;font-size:14px;letter-spacing:.03em}
+.nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+.nav a{text-decoration:none}.nav a:hover{color:var(--ink)}
+@media (max-width:640px){.nav{display:none}}
 
-/* trilho do funil */
-.rail{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);padding:28px 20px 28px max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:28px;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(4px)}
-.brand{font-family:var(--f-display);font-weight:900;font-variation-settings:"wdth" 150;font-size:15px;letter-spacing:.02em;line-height:1.1}
-.brand small{display:block;font-family:var(--f-mono);font-weight:400;font-size:10.5px;color:var(--muted);letter-spacing:.06em;margin-top:6px;text-transform:uppercase}
-.funnel{list-style:none;margin:0;padding:0;position:relative;display:flex;flex-direction:column;gap:2px}
-.funnel::before{content:"";position:absolute;left:5px;top:10px;bottom:10px;width:2px;background:var(--line)}
-.funnel .fill{position:absolute;left:5px;top:10px;width:2px;height:0;background:var(--signal);transition:height .4s}
-.funnel li{position:relative}
-.funnel a{display:grid;grid-template-columns:12px 1fr;gap:12px;align-items:center;padding:7px 0;text-decoration:none;color:var(--muted);font-size:13.5px}
-.funnel a i{width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--line);position:relative;z-index:1;transition:all .3s}
-.funnel a b{font-weight:500;display:block;line-height:1.2}
-.funnel a span{font-family:var(--f-mono);font-size:10.5px;opacity:.8}
-.funnel a.seen{color:var(--ink)}
-.funnel a.seen i{border-color:var(--signal);background:var(--signal)}
-.funnel a.now i{box-shadow:0 0 0 5px color-mix(in srgb,var(--signal) 22%,transparent)}
-.rail-foot{margin-top:auto;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);line-height:1.5}
+section{padding-block:80px;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+h2{font-size:clamp(30px,4.4vw,48px);font-weight:800;font-variation-settings:"wdth" 115;letter-spacing:-.01em;max-width:20ch;margin-bottom:40px}
 
-/* conteúdo */
-main{min-width:0;padding-inline:clamp(20px,4vw,64px);container-type:inline-size}
-section{padding-block:72px;border-bottom:1px solid var(--line);scroll-margin-top:8px}
-.stage{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
-.stage .n{color:var(--signal);font-weight:700}
-.stage code{border:1px solid var(--line);background:var(--paper);padding:2px 8px;border-radius:3px;color:var(--ink)}
-h2{font-size:clamp(30px,6.5cqi,58px);font-weight:800;font-variation-settings:"wdth" 120;letter-spacing:-.01em;max-width:18ch;margin-bottom:36px}
-.sub{color:var(--muted);max-width:60ch;margin:-20px 0 36px}
+/* topo */
+.hero{padding-block:56px 72px}
+.hero h1{font-size:clamp(48px,9vw,104px);font-weight:900;font-variation-settings:"wdth" 140;letter-spacing:-.02em;line-height:.9}
+.hero .tag{display:block;margin-top:18px;font-size:clamp(20px,2.6vw,30px);font-weight:500;font-variation-settings:"wdth" 92;color:var(--muted);line-height:1.15}
+.hero .tag em{font-style:normal;color:var(--accent);font-weight:700}
+.lede{font-size:clamp(17px,1.6vw,19px);max-width:56ch;margin:32px 0 0}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;align-items:center}
+.btn{font:600 15px/1 var(--f-body);padding:14px 20px;border-radius:4px;border:1.5px solid var(--ink);background:var(--ink);color:var(--bg);text-decoration:none;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.hint{display:inline-flex;align-items:center;gap:8px;font:500 13px/1 var(--f-body);color:var(--muted);background:none;border:0;padding:8px 4px;cursor:pointer}
+.hint:hover{color:var(--ink)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+.hint .dot{animation:pl 2s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent)}80%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
 
-/* hero */
-.hero{padding-block:56px 64px}
-.live{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12px;padding:7px 12px;border:1px solid var(--line);background:var(--paper);border-radius:3px}
-.pulse{width:8px;height:8px;border-radius:50%;background:var(--signal);animation:pl 1.6s infinite}
-@keyframes pl{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 60%,transparent)}80%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
-.hero h1{font-size:clamp(40px,11.5cqi,120px);font-weight:900;font-variation-settings:"wdth" 150;letter-spacing:-.025em;margin-top:28px;line-height:.86}
-.hero h1 .row2{display:block;font-size:.36em;line-height:1.1;margin-top:.4em;font-variation-settings:"wdth" 90;font-weight:500;letter-spacing:.005em;word-spacing:.14em;color:var(--muted)}
-.hero h1 .row2 em{font-style:normal;color:var(--signal);font-weight:800}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:44px;align-items:start}
-.hero-grid > *{min-width:0}
-.lede{font-size:clamp(17px,1.7vw,20px);margin:0;max-width:38ch}
-.lede b{font-weight:600}
-.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-.btn{font:600 15px/1 var(--f-body);padding:14px 20px;border-radius:3px;border:1.5px solid var(--ink);background:var(--ink);color:var(--bg);text-decoration:none;cursor:pointer}
-.btn.alt{background:transparent;color:var(--ink)}
-.code{background:var(--paper);border:1px solid var(--line);border-radius:4px;font:13px/1.7 var(--f-mono);overflow-x:auto}
-.code .h{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--line);color:var(--muted);font-size:11.5px}
-.code pre{margin:0;padding:14px 16px;white-space:pre}
-.k{color:var(--code-key)} .s{color:var(--code-str)} .nu{color:var(--code-num)} .c{color:var(--muted)}
-
-/* números */
-.figs{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--paper)}
-.fig{padding:22px 18px;min-width:0}
-.fig + .fig{border-left:1px solid var(--line)}
-.fig strong{display:block;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(30px,3.6vw,46px);line-height:1;font-variant-numeric:tabular-nums}
-.fig span{font-size:13.5px;color:var(--muted)}
-.fig .p{font-family:var(--f-mono);font-size:10.5px;color:var(--cobalt);display:block;margin-bottom:10px}
-
-/* método como pipeline */
-.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:44px}
-.pipe div{padding:16px 14px 0 0;border-top:3px solid var(--ink);position:relative;min-width:0}
-.pipe div::after{content:"";position:absolute;top:-8px;right:-1px;width:13px;height:13px;border-top:3px solid var(--ink);border-right:3px solid var(--ink);transform:rotate(45deg);background:transparent}
-.pipe div:last-child::after{display:none}
-.pipe div + div{padding-left:14px}
-.pipe .mono{font-size:11px;color:var(--signal)}
-.pipe h3{font-size:19px;font-weight:700;font-variation-settings:"wdth" 110;margin:6px 0}
-.pipe p{margin:0;font-size:14px;color:var(--muted)}
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:64px;padding-top:28px;border-top:1px solid var(--line)}
+.fig strong{display:block;font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 120;font-size:clamp(30px,3.4vw,42px);line-height:1;font-variant-numeric:tabular-nums}
+.fig span{font-size:14px;color:var(--muted)}
+@media (max-width:700px){.figs{grid-template-columns:1fr 1fr;row-gap:28px}}
 
 /* estratégia */
-.strat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:border-color .2s,transform .2s;min-width:0}
-.card:hover,.card:focus-visible{border-color:var(--signal);transform:translateY(-2px)}
-.card .tag{font-family:var(--f-mono);font-size:11px;color:var(--cobalt);letter-spacing:.03em}
-.card h3{font-size:22px;font-weight:700;font-variation-settings:"wdth" 108;line-height:1.1}
-.card p{margin:0;color:var(--muted);font-size:14.5px}
-.ph{list-style:none;margin:0;padding:0;border-top:1px dashed var(--line)}
-.ph li{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
-.ph li span{font-family:var(--f-mono);font-size:11px;color:var(--muted);padding-top:2px}
-.card .why{color:var(--ink);font-size:14px}
-.card .why b{color:var(--signal);font-family:var(--f-mono);font-size:11px;font-weight:700;margin-right:6px;letter-spacing:.04em}
+.strat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:26px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card .niche{font-size:13px;color:var(--muted)}
+.card h3{font-size:22px;font-weight:700;font-variation-settings:"wdth" 105;line-height:1.15}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card ol{margin:4px 0 0;padding-left:20px;font-size:15px;display:flex;flex-direction:column;gap:6px}
+.card ol li::marker{color:var(--accent);font-weight:600}
+@media (max-width:760px){.strat{grid-template-columns:minmax(0,1fr)}}
 
-/* cases como tabela de relatório */
-.report{border:1px solid var(--line);background:var(--paper);overflow-x:auto}
-.report table{width:100%;border-collapse:collapse;min-width:640px;font-variant-numeric:tabular-nums}
-.report th{font:500 11px/1.3 var(--f-mono);color:var(--muted);text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.05em}
-.report td{padding:18px 16px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14.5px}
-.report tr:last-child td{border-bottom:0}
-.report td.big{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 115;font-size:26px;line-height:1;white-space:nowrap}
-.report td small{display:block;color:var(--muted);font-size:12.5px;margin-top:4px;font-family:var(--f-body);font-weight:400}
-.report td .ch{font-family:var(--f-mono);font-size:11px;color:var(--cobalt)}
-.report tbody tr{cursor:pointer}
-.report tbody tr:hover td{background:color-mix(in srgb,var(--signal) 5%,transparent)}
+/* resultados */
+.report{overflow-x:auto}
+.report table{width:100%;border-collapse:collapse;min-width:620px;font-variant-numeric:tabular-nums}
+.report th{font:500 12px/1.3 var(--f-mono);color:var(--muted);text-align:left;padding:0 16px 12px 0;border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.05em}
+.report td{padding:22px 16px 22px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+.report td:first-child{color:var(--muted);max-width:30ch}
+.report td:first-child b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+.report td.big{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 112;font-size:26px;line-height:1;white-space:nowrap}
+.report td small{display:block;color:var(--muted);font:400 13px/1.3 var(--f-body);margin-top:6px}
+.note{font-size:13px;color:var(--muted);margin-top:16px}
 
-/* processos */
-.procs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.proc{border-top:3px solid var(--signal);padding-top:16px;min-width:0}
-.proc .mono{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.proc h3{font-size:22px;font-weight:800;font-variation-settings:"wdth" 118;margin:6px 0 10px}
-.proc p{margin:0 0 12px;color:var(--muted);font-size:14.5px}
-.proc ul{margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:5px}
-.mat{display:flex;gap:3px;margin-top:14px}.mat i{flex:1;height:7px;background:var(--line)}.mat i.on{background:var(--signal)}
-.mat-l{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);margin-top:5px}
-.stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:40px}
-.stack span{font-family:var(--f-mono);font-size:12px;padding:5px 10px;border:1px solid var(--line);background:var(--paper);border-radius:3px}
-.stack span.hl{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+/* método */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid var(--ink);padding-top:14px}
+.steps li::before{content:counter(s,decimal-leading-zero);font:500 12px/1 var(--f-mono);color:var(--accent)}
+.steps h3{font-size:19px;font-weight:700;font-variation-settings:"wdth" 108;margin:10px 0 6px}
+.steps p{margin:0;font-size:14.5px;color:var(--muted)}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.steps{grid-template-columns:1fr}}
+.own{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:56px}
+.own h3{font-size:17px;font-weight:700;font-variation-settings:"wdth" 105;margin-bottom:6px}
+.own p{margin:0;font-size:14.5px;color:var(--muted)}
+@media (max-width:760px){.own{grid-template-columns:minmax(0,1fr)}}
+.tools{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:15px;color:var(--muted)}
+.tools b{color:var(--ink);font-weight:600;margin-right:8px}
 
-/* trajetória como log de versões */
-.versions{font-family:var(--f-mono);font-size:13px;border-left:2px solid var(--line);margin-left:6px}
-.ver{position:relative;padding:0 0 28px 26px}
-.ver::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
-.ver.cur::before{background:var(--signal);border-color:var(--signal)}
-.ver .d{color:var(--muted)}
-.ver .d b{color:var(--ok);font-weight:500}
-.ver h3{font-family:var(--f-display);font-size:24px;font-weight:700;font-variation-settings:"wdth" 110;margin:6px 0 2px}
-.ver .o{color:var(--cobalt)}
-.ver p{font-family:var(--f-body);font-size:14.5px;color:var(--muted);margin:8px 0 0;max-width:60ch}
+/* trajetória */
+.roles{display:flex;flex-direction:column}
+.role{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding-block:20px;border-bottom:1px solid var(--line)}
+.role:first-child{padding-top:0}
+.role .when{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.role .now{color:var(--ok)}
+.role h3{font-size:21px;font-weight:700;font-variation-settings:"wdth" 105}
+.role .org{color:var(--muted);font-size:15px}
+.role p{margin:8px 0 0;color:var(--muted);font-size:15px;max-width:60ch}
+@media (max-width:640px){.role{grid-template-columns:1fr;gap:4px}}
 
-/* contato = conversão */
-.conv{background:var(--ink);color:var(--bg);border-radius:4px;padding:clamp(24px,4vw,48px)}
-.conv .stage{color:color-mix(in srgb,var(--bg) 65%,transparent)}
-.conv .stage code{background:transparent;border-color:color-mix(in srgb,var(--bg) 25%,transparent);color:var(--bg)}
-.conv h2{color:var(--bg);margin-bottom:16px}
-.conv > p{color:color-mix(in srgb,var(--bg) 70%,transparent);max-width:52ch;margin:0 0 28px}
+/* contato */
+.conv{background:var(--ink);color:var(--bg);border-radius:8px;padding:clamp(28px,5vw,56px)}
+.conv .eyebrow{color:color-mix(in srgb,var(--bg) 60%,transparent)}
+.conv h2{color:var(--bg);margin-bottom:14px}
+.conv > p{color:color-mix(in srgb,var(--bg) 72%,transparent);max-width:52ch;margin:0 0 32px}
 .lines{display:flex;flex-direction:column}
-.line{display:grid;grid-template-columns:100px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 0;border-top:1px solid color-mix(in srgb,var(--bg) 18%,transparent)}
-.line .l{font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:color-mix(in srgb,var(--bg) 60%,transparent)}
+.line{display:grid;grid-template-columns:100px minmax(0,1fr) auto;gap:14px;align-items:center;padding-block:14px;border-top:1px solid color-mix(in srgb,var(--bg) 16%,transparent)}
+.line .l{font-size:13px;color:color-mix(in srgb,var(--bg) 60%,transparent)}
 .line .v{font-weight:500;overflow-wrap:anywhere;user-select:all}
-.line .v a{color:var(--bg)}
-.fire{font:700 12px/1 var(--f-mono);padding:10px 14px;border:0;border-radius:3px;background:var(--signal);color:#fff;cursor:pointer;white-space:nowrap}
+.fire{font:600 13px/1 var(--f-body);padding:10px 14px;border:0;border-radius:4px;background:var(--accent);color:#fff;cursor:pointer;white-space:nowrap}
 .fire.done{background:var(--ok)}
+@media (max-width:460px){.line{grid-template-columns:minmax(0,1fr) auto}.line .l{grid-column:1/-1}}
+footer{padding-block:32px 96px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
-footer{padding-block:28px 40px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-/* painel de depuração */
-.dbg{position:sticky;top:0;height:100vh;border-left:1px solid var(--line);background:var(--paper);display:flex;flex-direction:column;padding-right:env(safe-area-inset-right,0px);min-width:0}
-.dbg-h{padding:18px 18px 14px;border-bottom:1px solid var(--line)}
-.dbg-h .t{display:flex;align-items:center;gap:8px;font:700 12px/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
-.dbg-h .t .pulse{width:7px;height:7px}
-.dbg-h p{margin:8px 0 0;font-size:12px;color:var(--muted);line-height:1.45}
-.kpis{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
-.kpi{padding:12px 18px;border-bottom:1px solid var(--line)}
-.kpi:nth-child(odd){border-right:1px solid var(--line)}
-.kpi:nth-last-child(-n+2){border-bottom:0}
-.kpi span{display:block;font-family:var(--f-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.kpi strong{font-family:var(--f-display);font-weight:800;font-variation-settings:"wdth" 120;font-size:24px;font-variant-numeric:tabular-nums;line-height:1.2}
+/* painel da visita (recolhido) */
+.fab{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:30;display:inline-flex;align-items:center;gap:10px;font:500 13px/1 var(--f-body);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:11px 16px;cursor:pointer;box-shadow:0 10px 30px -14px rgba(0,0,0,.35)}
+.fab b{font-family:var(--f-mono);font-weight:700}
+.panel{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:31;width:min(380px,calc(100vw - 40px));max-height:min(560px,calc(100vh - 120px));background:var(--paper);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;box-shadow:0 24px 60px -20px rgba(0,0,0,.45)}
+.panel[hidden]{display:none}
+.panel-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.panel-h strong{font-size:15px;display:block}
+.panel-h p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.x{background:none;border:0;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:2px 4px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.kpi{padding:10px 12px}.kpi + .kpi{border-left:1px solid var(--line)}
+.kpi span{display:block;font-size:11px;color:var(--muted)}
+.kpi strong{font-family:var(--f-mono);font-size:15px;font-variant-numeric:tabular-nums}
 .kpi strong.y{color:var(--ok)}
-.log{flex:1;overflow-y:auto;padding:8px 0;font:12px/1.45 var(--f-mono)}
-.ev{padding:8px 18px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:2px 10px}
-.ev .tm{color:var(--muted);font-size:10.5px;grid-row:span 2;padding-top:1px}
-.ev .nm{font-weight:700;color:var(--ink)}
-.ev .nm .src{font-weight:400;font-size:10px;padding:1px 5px;border-radius:2px;margin-left:6px;border:1px solid var(--line);color:var(--muted)}
-.ev .nm .src.srv{border-color:var(--cobalt);color:var(--cobalt)}
+.log{flex:1;overflow-y:auto;font:12px/1.45 var(--f-mono)}
+.ev{padding:9px 18px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:44px minmax(0,1fr);gap:2px 8px}
+.ev .tm{color:var(--muted);font-size:11px;grid-row:span 2;padding-top:1px}
+.ev .nm{font-weight:700}
 .ev .pr{color:var(--muted);font-size:11px;overflow-wrap:anywhere}
-.ev.lead .nm{color:var(--signal)}
-.ev.new{animation:flash 1.2s ease-out}
-@keyframes flash{from{background:color-mix(in srgb,var(--signal) 14%,transparent)}to{background:transparent}}
-.dbg-f{padding:12px 18px;border-top:1px solid var(--line);font:10.5px/1.45 var(--f-mono);color:var(--muted)}
+.ev.lead .nm{color:var(--accent)}
+.ev.new{animation:fl 1.2s ease-out}
+@keyframes fl{from{background:color-mix(in srgb,var(--accent) 12%,transparent)}to{background:transparent}}
+.panel-f{padding:10px 18px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
+@media (max-width:520px){.panel{right:0;left:0;bottom:0;width:auto;border-radius:12px 12px 0 0;max-height:72vh;padding-bottom:env(safe-area-inset-bottom,0px)}}
 
-/* responsivo */
-@media (max-width:1180px){.shell{grid-template-columns:minmax(0,1fr) var(--rail-r)}.rail{display:none}main{padding-left:max(20px,env(safe-area-inset-left,0px))}}
-@media (max-width:860px){
-  .shell{grid-template-columns:minmax(0,1fr)}
-  main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:150px}
-  .dbg{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;border-left:0;border-top:1px solid var(--line);z-index:20;padding:0 max(0px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(0px,env(safe-area-inset-left,0px));box-shadow:0 -12px 30px -18px rgba(0,0,0,.35)}
-  .dbg-h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px}
-  .dbg-h p,.dbg-f{display:none}
-  .dbg-tg{display:inline-flex}
-  .kpis{display:none}
-  .dbg.open .kpis{display:grid;grid-template-columns:repeat(4,1fr)}
-  .dbg.open .kpi{border-bottom:0;border-right:1px solid var(--line);padding:8px 12px}
-  .dbg.open .kpi:last-child{border-right:0}
-  .dbg.open .kpi strong{font-size:18px}
-  .log{flex:none;max-height:58px;overflow:hidden;padding:0;border-top:1px solid var(--line)}
-  .log .ev{display:none;border-bottom:0;padding:8px 16px}
-  .log .ev:first-child{display:grid}
-  .dbg.open .log{max-height:42vh;overflow-y:auto}
-  .dbg.open .log .ev{display:grid;border-bottom:1px solid var(--line)}
-  .hero-grid,.strat,.procs{grid-template-columns:minmax(0,1fr)}
-  .pipe{grid-template-columns:1fr 1fr;gap:24px}.pipe div + div{padding-left:0}.pipe div::after{display:none}
-  .figs{grid-template-columns:1fr 1fr}.fig:nth-child(3){border-left:0}.fig:nth-child(n+3){border-top:1px solid var(--line)}
-}
-.dbg-tg{display:none;align-items:center;gap:8px;font:500 12px/1 var(--f-mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:8px 10px;cursor:pointer;white-space:nowrap}
-.dbg-tg b{font-family:var(--f-display);font-variation-settings:"wdth" 120;font-size:15px}
-.dbg-tg .chev{display:inline-block;transition:transform .2s}
-.dbg.open .dbg-tg .chev{transform:rotate(180deg)}
-@media (max-width:460px){.line{grid-template-columns:minmax(0,1fr) auto}.line .l{grid-column:1/-1}.pipe{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W6SH64VV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<div class="shell">
-  <nav class="rail" aria-label="Etapas do funil">
-    <div class="brand">ALDO BARBOSA<small>tráfego · tracking · estratégia</small></div>
-    <ul class="funnel" id="funnel">
-      <li class="fill" id="fill" aria-hidden="true"></li>
-      <li><a href="#impressao" data-s="impressao"><i></i><div><b>Impressão</b><span>page_view</span></div></a></li>
-      <li><a href="#interesse" data-s="interesse"><i></i><div><b>Interesse</b><span>view_method</span></div></a></li>
-      <li><a href="#consideracao" data-s="consideracao"><i></i><div><b>Consideração</b><span>view_strategy</span></div></a></li>
-      <li><a href="#prova" data-s="prova"><i></i><div><b>Prova</b><span>view_results</span></div></a></li>
-      <li><a href="#metodo" data-s="metodo"><i></i><div><b>Método</b><span>view_process</span></div></a></li>
-      <li><a href="#historico" data-s="historico"><i></i><div><b>Histórico</b><span>view_career</span></div></a></li>
-      <li><a href="#conversao" data-s="conversao"><i></i><div><b>Conversão</b><span>generate_lead</span></div></a></li>
-    </ul>
-    <div class="rail-foot">Seu progresso no funil desta página aparece em laranja.</div>
-  </nav>
+<div class="wrap">
+  <header class="top">
+    <span class="brand">ALDO BARBOSA</span>
+    <nav class="nav" aria-label="Seções"><a href="#estrategia">Estratégia</a><a href="#resultados">Resultados</a><a href="#metodo">Método</a><a href="#contato">Contato</a></nav>
+  </header>
 
-  <main>
-    <section class="hero" id="impressao" data-ev="page_view" data-label="Impressão">
-      <div class="live"><span class="pulse"></span>Esta página está medindo a sua visita agora</div>
-      <h1>Aldo Barbosa<span class="row2">gestor de tráfego que <em>mede</em> antes de escalar</span></h1>
-      <div class="hero-grid">
-        <div>
-          <p class="lede">Há mais de 5 anos penso o marketing inteiro, de <b>oferta e funil</b> a <b>rastreamento em GTM, GA4, Pixel e CAPI</b>, até a escala em <b>Meta Ads e Google Ads</b>. Subir campanha é só uma etapa.</p>
-          <p class="lede" style="margin-top:16px;font-size:15px;color:var(--muted)">Role a página e acompanhe no painel lateral cada evento que a sua leitura dispara. É o mesmo cuidado que eu levo para a conta de cada cliente.</p>
-          <div class="cta"><a class="btn" href="#conversao">Disparar um lead</a><a class="btn alt" href="#prova">Ver resultados</a></div>
-        </div>
-        <div class="code" aria-label="Perfil profissional em formato de dataLayer">
-          <div class="h"><span>dataLayer.push()</span><span>perfil.js</span></div>
-<pre><span class="k">event</span>: <span class="s">"profile_view"</span>,
-<span class="k">nome</span>: <span class="s">"Aldo Barbosa"</span>,
-<span class="k">funcao</span>: <span class="s">"Gestor de Tráfego Pago"</span>,
-<span class="k">anos_experiencia</span>: <span class="nu">5</span>,
-<span class="k">verba_gerida_brl</span>: <span class="nu">250000</span>,
-<span class="k">plataformas</span>: [<span class="s">"meta_ads"</span>, <span class="s">"google_ads"</span>],
-<span class="k">tracking</span>: [<span class="s">"gtm"</span>, <span class="s">"ga4"</span>, <span class="s">"pixel"</span>, <span class="s">"capi"</span>],
-<span class="k">certificacao</span>: <span class="s">"Meta Blueprint"</span>,
-<span class="k">base</span>: <span class="s">"Rio de Janeiro · remoto"</span>,
-<span class="k">disponivel</span>: <span class="nu">true</span>  <span class="c">// PJ e projetos</span></pre>
-        </div>
-      </div>
-    </section>
-
-    <section id="interesse" data-ev="view_method" data-label="Interesse">
-      <div class="stage"><span class="n">etapa 02</span>interesse<code>event: view_method</code></div>
-      <h2>Do diagnóstico à escala, sem achismo.</h2>
-      <div class="figs">
-        <div class="fig"><span class="p">anos_experiencia</span><strong>5+</strong><span>anos em tráfego pago</span></div>
-        <div class="fig"><span class="p">verba_gerida</span><strong>R$250 mil+</strong><span>administrados em mídia</span></div>
-        <div class="fig"><span class="p">empresas</span><strong>70+</strong><span>empresas atendidas</span></div>
-        <div class="fig"><span class="p">nichos_ativos</span><strong>4</strong><span>nichos atendidos hoje</span></div>
-      </div>
-      <div class="pipe">
-        <div><span class="mono">01 · diagnóstico</span><h3>Leitura</h3><p>Conta, funil e histórico antes de mexer em qualquer campanha.</p></div>
-        <div><span class="mono">02 · tracking</span><h3>Medição</h3><p>GTM, GA4, Pixel e CAPI com deduplicação e UTMs padronizadas.</p></div>
-        <div><span class="mono">03 · estrutura</span><h3>Desenho</h3><p>Campanhas e públicos pensados para o objetivo real do negócio.</p></div>
-        <div><span class="mono">04 · teste</span><h3>Validação</h3><p>Criativo e público em A/B, com critério de corte definido antes.</p></div>
-        <div><span class="mono">05 · escala</span><h3>Escala</h3><p>Mais verba só no que já provou retorno, com relatório claro.</p></div>
-      </div>
-    </section>
-
-    <section id="consideracao" data-ev="view_strategy" data-label="Consideração">
-      <div class="stage"><span class="n">etapa 03</span>consideração<code>event: view_strategy</code></div>
-      <h2>Antes do gerenciador, vem o negócio.</h2>
-      <p class="sub">Quatro projetos recentes, identificados pelo nicho para preservar cada cliente.</p>
-      <div class="strat">
-        <article class="card" tabindex="0" data-item="advocacia">
-          <div class="tag">ADVOCACIA · INVENTÁRIO E REGULARIZAÇÃO · BRASIL</div>
-          <h3>Crescer além do que já funciona</h3>
-          <p>O escritório já gerava conversas no WhatsApp com R$50/dia. O desafio era abrir novas frentes sem queimar o que dava certo.</p>
-          <ul class="ph"><li><span>fase 1</span>Uma campanha por serviço e lookalike a partir da base real de clientes.</li><li><span>fase 2</span>Formulário instantâneo no serviço vencedor.</li><li><span>fase 3</span>Topo de funil e recorte geográfico a partir de R$150/dia.</li></ul>
-          <p class="why"><b>POR QUÊ</b>Separar serviços mostra qual nicho paga a conta antes de escalar.</p>
-        </article>
-        <article class="card" tabindex="0" data-item="educacao">
-          <div class="tag">EDUCAÇÃO · DO PRESENCIAL PARA O DIGITAL</div>
-          <h3>Funil de entrada para um curso de R$1.800</h3>
-          <p>Uma escola com todo o faturamento em eventos presenciais quis começar a vender online um curso de 180 horas.</p>
-          <ul class="ph"><li><span>oferta</span>Módulo de entrada a R$197 para gerar volume e lista de compradores.</li><li><span>funil</span>Remarketing e upsell para o curso completo.</li><li><span>teste</span>R$100/dia em ABO com dois conjuntos.</li></ul>
-          <p class="why"><b>POR QUÊ</b>Ticket alto vende melhor para quem já comprou algo menor.</p>
-        </article>
-        <article class="card" tabindex="0" data-item="servico_local">
-          <div class="tag">SERVIÇO LOCAL · HIGIENIZAÇÃO · BELO HORIZONTE</div>
-          <h3>Verba dividida pela intenção de compra</h3>
-          <p>Ticket de R$250 a R$280 e R$3 mil/mês, num mercado em que o cliente pesquisa antes de chamar.</p>
-          <ul class="ph"><li><span>mês 1</span>65% no Google para capturar quem já procura o serviço.</li><li><span>mês 2+</span>50/50, com Meta em Click-to-WhatsApp.</li><li><span>público</span>Bairros de maior renda dentro do raio de atendimento.</li></ul>
-          <p class="why"><b>POR QUÊ</b>A demanda que já existe se captura primeiro. A nova vem depois.</p>
-        </article>
-        <article class="card" tabindex="0" data-item="musica">
-          <div class="tag">ARTISTA MUSICAL · DIVULGAÇÃO</div>
-          <h3>Mídia paga com design incluído</h3>
-          <p>Proposta para uma artista independente que precisava de alcance e de identidade visual consistente.</p>
-          <ul class="ph"><li><span>plano A</span>Meta Ads com criação de peças.</li><li><span>plano B</span>Google Ads e YouTube com criação de peças.</li><li><span>verba</span>Mídia separada da gestão, com custo transparente.</li></ul>
-          <p class="why"><b>POR QUÊ</b>Em música o criativo é o produto, então o design é estratégia.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="prova" data-ev="view_results" data-label="Prova">
-      <div class="stage"><span class="n">etapa 04</span>prova<code>event: view_results</code></div>
-      <h2>Relatório de resultados.</h2>
-      <p class="sub">Números tirados direto das plataformas. Clique numa linha e veja o evento no painel.</p>
-      <div class="report">
-        <table>
-          <thead><tr><th>Campanha</th><th>Métrica principal</th><th>Apoio</th><th>Apoio</th></tr></thead>
-          <tbody>
-            <tr data-item="case_mensagens"><td><span class="ch">META · MENSAGENS</span><br>Leads via WhatsApp com nova segmentação e testes A/B</td><td class="big">R$2,97<small>menor custo por conversa</small></td><td class="big">184<small>conversas no melhor conjunto</small></td><td class="big">R$5,76<small>teto do custo por resultado</small></td></tr>
-            <tr data-item="case_ecommerce"><td><span class="ch">META · E-COMMERCE</span><br>Conversão com eventos de carrinho no Pixel</td><td class="big">R$11.604<small>maior valor de conversão</small></td><td class="big">R$3,61<small>menor custo por adição</small></td><td class="big">58<small>adições em uma campanha</small></td></tr>
-            <tr data-item="case_trafego"><td><span class="ch">META · TRÁFEGO</span><br>Público frio direcionado e públicos quentes separados</td><td class="big">R$0,08<small>custo por clique no link</small></td><td class="big">R$0,07<small>custo por visita ao perfil</small></td><td class="big">7,85%<small>CTR no público direcionado</small></td></tr>
-            <tr data-item="case_organico"><td><span class="ch">INSTAGRAM · ORGÂNICO</span><br>Conteúdo guiado por dados de horário e formato</td><td class="big">+381%<small>visualizações (231 mil)</small></td><td class="big">+280%<small>alcance (98 mil contas)</small></td><td class="big">+360%<small>cliques no link</small></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="metodo" data-ev="view_process" data-label="Método">
-      <div class="stage"><span class="n">etapa 05</span>método<code>event: view_process</code></div>
-      <h2>Processos que eu criei e uso em todo cliente.</h2>
-      <div class="procs">
-        <div class="proc"><span class="mono">tracking</span><h3>Ciclo de validação</h3><p>Nenhum evento é entregue como pronto sem teste de ponta a ponta.</p>
-          <ul><li>Testar, analisar, verificar e corrigir antes de entregar</li><li>Pixel e CAPI com deduplicação por event_id</li><li>Auditoria do GTM e das regras antigas do Event Setup Tool</li><li>Mesmo nome de evento em GTM, GA4 e Meta</li></ul></div>
-        <div class="proc"><span class="mono">concorrência</span><h3>Raio-X de funil</h3><p>Mapeio quem mais traciona no nicho para modelar a estrutura, sem copiar criativo.</p>
-          <ul><li>Sinais de tração na Biblioteca de Anúncios</li><li>Ângulos, hooks e oferta de ponta a ponta</li><li>Leitura de rede: pixel, GA4, sGTM, Consent Mode</li></ul>
-          <div class="mat" aria-label="Escala de maturidade de tracking de 1 a 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><div class="mat-l"><span>1 · só pixel</span><span>5 · atribuição própria</span></div></div>
-        <div class="proc"><span class="mono">operação</span><h3>Rotina com o cliente</h3><p>Acompanhamento diário dos grupos de atendimento, sem demanda perdida.</p>
-          <ul><li>Checagem estruturada de cada grupo de cliente</li><li>Áudios longos transcritos para manter o contexto</li><li>Relatório em PDF com estratégia por fase</li><li>Tracking white-label para gestores e agências</li></ul></div>
-      </div>
-      <div class="stack">
-        <span class="hl">Meta Ads</span><span class="hl">Google Ads</span><span class="hl">Google Tag Manager</span><span class="hl">API de Conversões</span><span>GA4</span><span>Pixel Meta</span><span>Looker Studio</span><span>UTMs</span><span>EMQ</span><span>Consent Mode v2</span><span>Remarketing</span><span>Lookalike</span><span>YouTube Ads</span><span>Meta Blueprint</span><span>Inglês</span><span>Espanhol</span>
-      </div>
-    </section>
-
-    <section id="historico" data-ev="view_career" data-label="Histórico">
-      <div class="stage"><span class="n">etapa 06</span>histórico<code>event: view_career</code></div>
-      <h2>Disciplina de campo, rotina de dados.</h2>
-      <div class="versions">
-        <div class="ver cur"><span class="d">jul/2026 → <b>atual</b></span><h3>Gestor de Tráfego Pago</h3><span class="o">Agência Scalo</span><p>Campanhas e rastreamento para clientes de advocacia, serviços locais, educação e infoprodutos.</p></div>
-        <div class="ver"><span class="d">nov/2023 → fev/2026</span><h3>Gestor de Tráfego</h3><span class="o">Agro Química São Gabriel</span><p>Google Ads in-house para indústria, com apoio na experiência do site.</p></div>
-        <div class="ver"><span class="d">dez/2019 → jan/2023</span><h3>Gestor de Tráfego Autônomo</h3><span class="o">Clientes próprios</span><p>Meta Ads e Google Ads para e-commerces, negócios locais, digitais e institucionais.</p></div>
-        <div class="ver"><span class="d">ago/2012 → ago/2020</span><h3>Militar</h3><span class="o">Exército Brasileiro</span><p>Oito anos de serviço. Daí vêm o método, a disciplina e o hábito de planejar antes de agir.</p></div>
-      </div>
-    </section>
-
-    <section id="conversao" data-ev="view_contact" data-label="Conversão" style="border-bottom:0">
-      <div class="conv">
-        <div class="stage"><span class="n">etapa 07</span>conversão<code>event: generate_lead</code></div>
-        <h2>Seja o lead desta página.</h2>
-        <p>Aberto a vagas PJ remotas, posições em agência ou in-house e projetos de rastreamento. Copie um contato e veja o lead entrar no painel, com o mesmo event_id enviado ao GA4 e ao Meta Pixel.</p>
-        <div class="lines">
-          <div class="line"><span class="l">E-mail</span><span class="v">asilvaneto.gestordetrafego@gmail.com</span><button class="fire" type="button" id="f-mail" data-copy="asilvaneto.gestordetrafego@gmail.com" data-ch="email">copiar</button></div>
-          <div class="line"><span class="l">WhatsApp</span><span class="v">(21) 97945-7355</span><button class="fire" type="button" id="f-tel" data-copy="+5521979457355" data-ch="whatsapp">copiar</button></div>
-          <div class="line"><span class="l">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/aldo-barbosa-b114452a7" target="_blank" rel="noopener">linkedin.com/in/aldo-barbosa-b114452a7</a></span><button class="fire" type="button" id="f-in" data-copy="https://www.linkedin.com/in/aldo-barbosa-b114452a7" data-ch="linkedin">copiar</button></div>
-        </div>
-      </div>
-      <footer><span>© 2026 Aldo Barbosa · Rio de Janeiro</span><span>Esta página usa Google Analytics e Meta Pixel para medir visitas. Nenhum dado pessoal é enviado.</span></footer>
-    </section>
-  </main>
-
-  <aside class="dbg" aria-label="Painel de eventos da sua visita">
-    <div class="dbg-h"><div><div class="t"><span class="pulse"></span>Debug · sua visita</div><p>Eventos reais disparados pela sua leitura desta página.</p></div><button class="dbg-tg" type="button" id="dbg-tg" aria-expanded="false" aria-controls="log"><b id="m-ev">1</b>eventos <span class="chev">▲</span></button></div>
-    <div class="kpis">
-      <div class="kpi"><span>tempo</span><strong id="k-time">0:00</strong></div>
-      <div class="kpi"><span>scroll</span><strong id="k-scroll">0%</strong></div>
-      <div class="kpi"><span>eventos</span><strong id="k-ev">1</strong></div>
-      <div class="kpi"><span>lead</span><strong id="k-lead">não</strong></div>
+  <section class="hero" id="impressao" data-ev="page_view" data-label="Impressão" style="border-top:0">
+    <h1>Aldo Barbosa</h1>
+    <span class="tag">Gestor de tráfego que <em>mede</em> antes de escalar</span>
+    <p class="lede">Há mais de 5 anos penso o marketing inteiro: oferta, funil, rastreamento em GTM, GA4 e Pixel e escala em Meta Ads e Google Ads. Subir campanha é só uma etapa.</p>
+    <div class="cta">
+      <a class="btn" href="#contato">Falar comigo</a>
+      <a class="btn alt" href="#resultados">Ver resultados</a>
+      <button class="hint" type="button" data-open-panel><span class="dot"></span>Esta página mede a sua visita. Ver eventos</button>
     </div>
-    <div class="log" id="log" aria-live="polite">
-      <div class="ev"><span class="tm">00:00</span><span class="nm">page_view<span class="src">browser</span></span><span class="pr">page_title: Aldo Barbosa · section: impressao</span></div>
+    <div class="figs">
+      <div class="fig"><strong>5+</strong><span>anos em tráfego pago</span></div>
+      <div class="fig"><strong>R$250 mil+</strong><span>em verba administrada</span></div>
+      <div class="fig"><strong>70+</strong><span>empresas atendidas</span></div>
+      <div class="fig"><strong>4</strong><span>nichos atendidos hoje</span></div>
     </div>
-    <div class="dbg-f">GTM → GA4 · Meta Pixel<br>Os mesmos eventos vão para o dataLayer de verdade.</div>
-  </aside>
+  </section>
+
+  <section id="estrategia" data-ev="view_strategy" data-label="Consideração">
+    <div class="eyebrow">Estratégia</div>
+    <h2>Antes do gerenciador, vem o negócio.</h2>
+    <div class="strat">
+      <article class="card" tabindex="0" data-item="advocacia">
+        <span class="niche">Advocacia · Inventário e regularização · Brasil</span>
+        <h3>Crescer além do que já funciona</h3>
+        <p>O escritório já gerava conversas no WhatsApp com R$50/dia e queria novas frentes sem perder o que dava certo.</p>
+        <ol><li>Uma campanha por serviço, com lookalike da base de clientes</li><li>Formulário instantâneo no serviço vencedor</li><li>Topo de funil e recorte geográfico a partir de R$150/dia</li></ol>
+      </article>
+      <article class="card" tabindex="0" data-item="educacao">
+        <span class="niche">Educação · Do presencial para o digital</span>
+        <h3>Funil de entrada para um curso de R$1.800</h3>
+        <p>Uma escola que só vendia em eventos presenciais quis começar a vender online um curso de 180 horas.</p>
+        <ol><li>Módulo de entrada a R$197 para gerar lista de compradores</li><li>Remarketing e upsell para o curso completo</li><li>R$100/dia em ABO com dois conjuntos de teste</li></ol>
+      </article>
+      <article class="card" tabindex="0" data-item="servico_local">
+        <span class="niche">Serviço local · Higienização · Belo Horizonte</span>
+        <h3>Verba dividida pela intenção de compra</h3>
+        <p>Ticket de R$250 a R$280 e R$3 mil por mês, num mercado em que o cliente pesquisa antes de chamar.</p>
+        <ol><li>Mês 1 com 65% no Google, para quem já procura o serviço</li><li>Do mês 2 em diante, 50/50 com Meta em Click-to-WhatsApp</li><li>Bairros de maior renda dentro do raio de atendimento</li></ol>
+      </article>
+      <article class="card" tabindex="0" data-item="musica">
+        <span class="niche">Artista musical · Divulgação</span>
+        <h3>Mídia paga com design incluído</h3>
+        <p>Proposta para uma artista independente que precisava de alcance e de identidade visual consistente.</p>
+        <ol><li>Plano A: Meta Ads com criação de peças</li><li>Plano B: Google Ads e YouTube com criação de peças</li><li>Verba de mídia separada da gestão, com custo transparente</li></ol>
+      </article>
+    </div>
+  </section>
+
+  <section id="resultados" data-ev="view_results" data-label="Prova">
+    <div class="eyebrow">Resultados</div>
+    <h2>Números tirados direto das plataformas.</h2>
+    <div class="report">
+      <table>
+        <thead><tr><th>Campanha</th><th>Principal</th><th>Apoio</th><th>Apoio</th></tr></thead>
+        <tbody>
+          <tr data-item="case_mensagens"><td><b>Meta Ads · Mensagens</b>Leads no WhatsApp com nova segmentação e testes A/B</td><td class="big">R$2,97<small>menor custo por conversa</small></td><td class="big">184<small>conversas no melhor conjunto</small></td><td class="big">R$5,76<small>teto do custo por resultado</small></td></tr>
+          <tr data-item="case_ecommerce"><td><b>Meta Ads · E-commerce</b>Conversão com eventos de carrinho no Pixel</td><td class="big">R$11.604<small>maior valor de conversão</small></td><td class="big">R$3,61<small>menor custo por adição</small></td><td class="big">58<small>adições em uma campanha</small></td></tr>
+          <tr data-item="case_trafego"><td><b>Meta Ads · Tráfego</b>Público frio e públicos quentes separados</td><td class="big">R$0,08<small>custo por clique no link</small></td><td class="big">R$0,07<small>custo por visita ao perfil</small></td><td class="big">7,85%<small>CTR no público direcionado</small></td></tr>
+          <tr data-item="case_organico"><td><b>Instagram · Orgânico</b>Conteúdo guiado por dados de horário e formato</td><td class="big">+381%<small>visualizações (231 mil)</small></td><td class="big">+280%<small>alcance (98 mil contas)</small></td><td class="big">+360%<small>cliques no link</small></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="metodo" data-ev="view_method" data-label="Método">
+    <div class="eyebrow">Método</div>
+    <h2>Do diagnóstico à escala, sem achismo.</h2>
+    <ol class="steps">
+      <li><h3>Diagnóstico</h3><p>Leio a conta, o funil e o histórico antes de mexer em qualquer campanha.</p></li>
+      <li><h3>Rastreamento</h3><p>GTM, GA4, Pixel e CAPI com deduplicação e UTMs padronizadas.</p></li>
+      <li><h3>Estrutura</h3><p>Campanhas e públicos pensados para o objetivo real do negócio.</p></li>
+      <li><h3>Teste</h3><p>Criativo e público em A/B, com critério de corte definido antes.</p></li>
+      <li><h3>Escala</h3><p>Mais verba só no que já provou retorno, com relatório claro.</p></li>
+    </ol>
+    <div class="own">
+      <div><h3>Validação de tracking</h3><p>Nenhum evento é entregue sem teste de ponta a ponta no Preview, no DebugView e no Test Events.</p></div>
+      <div><h3>Raio-X de concorrente</h3><p>Mapeio o funil e o tracking de quem mais traciona no nicho para modelar a estrutura.</p></div>
+      <div><h3>Tracking para agências</h3><p>Implantação de rastreamento white-label para outros gestores e agências.</p></div>
+    </div>
+    <p class="tools"><b>Ferramentas</b>Meta Ads · Google Ads · Google Tag Manager · GA4 · Pixel e API de Conversões · Looker Studio · Consent Mode v2 · Meta Blueprint</p>
+  </section>
+
+  <section id="trajetoria" data-ev="view_career" data-label="Histórico">
+    <div class="eyebrow">Trajetória</div>
+    <h2>Disciplina de campo, rotina de dados.</h2>
+    <div class="roles">
+      <div class="role"><div class="when">jul/2026 → <span class="now">atual</span></div><div><h3>Gestor de Tráfego Pago</h3><div class="org">Agência Scalo</div><p>Campanhas e rastreamento para clientes de advocacia, serviços locais, educação e infoprodutos.</p></div></div>
+      <div class="role"><div class="when">nov/2023 → fev/2026</div><div><h3>Gestor de Tráfego</h3><div class="org">Agro Química São Gabriel</div><p>Google Ads in-house para indústria, com apoio na experiência do site.</p></div></div>
+      <div class="role"><div class="when">dez/2019 → jan/2023</div><div><h3>Gestor de Tráfego Autônomo</h3><div class="org">Clientes próprios</div><p>Meta Ads e Google Ads para e-commerces, negócios locais, digitais e institucionais.</p></div></div>
+      <div class="role"><div class="when">ago/2012 → ago/2020</div><div><h3>Militar</h3><div class="org">Exército Brasileiro</div><p>Oito anos de serviço. Daí vêm o método, a disciplina e o hábito de planejar antes de agir.</p></div></div>
+    </div>
+  </section>
+
+  <section id="contato" data-ev="view_contact" data-label="Conversão" style="border-top:0;padding-top:0">
+    <div class="conv">
+      <div class="eyebrow">Contato</div>
+      <h2>Vamos medir o seu próximo resultado.</h2>
+      <p>Aberto a vagas PJ remotas, posições em agência ou in-house e projetos de rastreamento. Base no Rio de Janeiro, atendo todo o Brasil.</p>
+      <div class="lines">
+        <div class="line"><span class="l">E-mail</span><span class="v">asilvaneto.gestordetrafego@gmail.com</span><button class="fire" type="button" id="f-mail" data-copy="asilvaneto.gestordetrafego@gmail.com" data-ch="email">Copiar</button></div>
+        <div class="line"><span class="l">WhatsApp</span><span class="v">(21) 97945-7355</span><button class="fire" type="button" id="f-tel" data-copy="+5521979457355" data-ch="whatsapp">Copiar</button></div>
+        <div class="line"><span class="l">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/aldo-barbosa-b114452a7" target="_blank" rel="noopener">linkedin.com/in/aldo-barbosa-b114452a7</a></span><button class="fire" type="button" id="f-in" data-copy="https://www.linkedin.com/in/aldo-barbosa-b114452a7" data-ch="linkedin">Copiar</button></div>
+      </div>
+    </div>
+    <footer><span>© 2026 Aldo Barbosa</span><span>Esta página usa Google Analytics e Meta Pixel para medir visitas. Nenhum dado pessoal é enviado.</span></footer>
+  </section>
 </div>
+
+<button class="fab" type="button" id="fab" data-open-panel aria-expanded="false" aria-controls="panel"><span class="dot"></span>Sua visita · <b id="m-ev">1</b> eventos</button>
+<aside class="panel" id="panel" aria-label="Eventos da sua visita" hidden>
+  <div class="panel-h"><div><strong>Eventos da sua visita</strong><p>Tudo o que a sua leitura disparou até agora, como num debug de GTM.</p></div><button class="x" type="button" id="panel-x" aria-label="Fechar">×</button></div>
+  <div class="kpis">
+    <div class="kpi"><span>tempo</span><strong id="k-time">0:00</strong></div>
+    <div class="kpi"><span>scroll</span><strong id="k-scroll">0%</strong></div>
+    <div class="kpi"><span>eventos</span><strong id="k-ev">1</strong></div>
+    <div class="kpi"><span>lead</span><strong id="k-lead">não</strong></div>
+  </div>
+  <div class="log" id="log" aria-live="polite">
+    <div class="ev"><span class="tm">00:00</span><span class="nm">page_view</span><span class="pr">page_title: Aldo Barbosa</span></div>
+  </div>
+  <div class="panel-f">GTM → GA4 e Meta Pixel. Os mesmos eventos vão para o dataLayer de verdade.</div>
+</aside>
 
 <script>
 (function(){
   var log=document.getElementById('log'),kEv=document.getElementById('k-ev'),mEv=document.getElementById('m-ev'),
-      kTime=document.getElementById('k-time'),kScroll=document.getElementById('k-scroll'),kLead=document.getElementById('k-lead');
+      kTime=document.getElementById('k-time'),kScroll=document.getElementById('k-scroll'),kLead=document.getElementById('k-lead'),
+      panel=document.getElementById('panel'),fab=document.getElementById('fab');
   var t0=Date.now(),count=1,maxScroll=0,marks={25:0,50:0,75:0,90:0},seen={impressao:1};
   function ts(){var s=Math.floor((Date.now()-t0)/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
   function rid(){return Math.random().toString(16).slice(2,8)}
@@ -416,53 +306,45 @@ footer{padding-block:28px 40px;font-family:var(--f-mono);font-size:11.5px;color:
   function push(name,params,opt){
     opt=opt||{};count++;kEv.textContent=count;mEv.textContent=count;
     var row=document.createElement('div');row.className='ev new'+(opt.lead?' lead':'');
-    row.innerHTML='<span class="tm">'+ts()+'</span><span class="nm">'+name+'<span class="src'+(opt.srv?' srv':'')+'">'+(opt.srv?'server':'browser')+'</span></span><span class="pr">'+params+'</span>';
+    row.innerHTML='<span class="tm">'+ts()+'</span><span class="nm">'+name+'</span><span class="pr">'+params+'</span>';
     log.insertBefore(row,log.firstChild);
     while(log.children.length>60)log.removeChild(log.lastChild);
   }
-  var dbg=document.querySelector('.dbg'),tg=document.getElementById('dbg-tg');
-  tg.addEventListener('click',function(){var o=dbg.classList.toggle('open');tg.setAttribute('aria-expanded',o?'true':'false')});
+  function setPanel(open){panel.hidden=!open;fab.setAttribute('aria-expanded',open?'true':'false')}
+  document.querySelectorAll('[data-open-panel]').forEach(function(b){b.addEventListener('click',function(){setPanel(panel.hidden)})});
+  document.getElementById('panel-x').addEventListener('click',function(){setPanel(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setPanel(false)});
+
   setInterval(function(){var s=Math.floor((Date.now()-t0)/1000);kTime.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')},1000);
-  setTimeout(function(){push('session_start','engagement_time_msec: 0 · source: (direct)')},600);
+  setTimeout(function(){push('session_start','source: (direct)')},600);
 
-  var fill=document.getElementById('fill'),links=[].slice.call(document.querySelectorAll('.funnel a'));
-  function updRail(cur){
-    var order=links.map(function(a){return a.dataset.s}),last=0;
-    links.forEach(function(a,i){var on=!!seen[a.dataset.s];a.classList.toggle('seen',on);a.classList.toggle('now',a.dataset.s===cur);if(on)last=i});
-    var f=links[0].parentNode.offsetTop,l=links[last].parentNode.offsetTop;fill.style.height=(l-f)+'px';
-  }
-  updRail('impressao');
-
-  var secs=[].slice.call(document.querySelectorAll('main section'));
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){
       if(!e.isIntersecting)return;var id=e.target.id;
-      if(!seen[id]){seen[id]=1;push(e.target.dataset.ev,'section: '+id+' · stage: '+e.target.dataset.label.toLowerCase());if(id!=='impressao')dl({event:e.target.dataset.ev,section:id,stage:e.target.dataset.label.toLowerCase()})}
-      updRail(id);
+      if(!seen[id]){seen[id]=1;push(e.target.dataset.ev,'section: '+id);dl({event:e.target.dataset.ev,section:id,stage:e.target.dataset.label.toLowerCase()})}
     })},{rootMargin:'-40% 0px -50% 0px'});
-    secs.forEach(function(s){io.observe(s)});
+    document.querySelectorAll('section[data-ev]').forEach(function(s){io.observe(s)});
   }
-  function onScroll(){
+  window.addEventListener('scroll',function(){
     var h=document.documentElement,max=h.scrollHeight-h.clientHeight;var p=max>0?Math.round(h.scrollTop/max*100):0;
     if(p>maxScroll){maxScroll=p;kScroll.textContent=p+'%'}
     [25,50,75,90].forEach(function(m){if(maxScroll>=m&&!marks[m]){marks[m]=1;push('scroll_depth','percent_scrolled: '+m);dl({event:'scroll_depth',percent_scrolled:m})}});
-  }
-  window.addEventListener('scroll',onScroll,{passive:true});
+  },{passive:true});
 
   document.querySelectorAll('[data-item]').forEach(function(el){
-    function sel(){var ct=el.tagName==='TR'?'case':'estrategia';push('select_content','content_type: '+ct+' · item_id: '+el.dataset.item);dl({event:'select_content',content_type:ct,item_id:el.dataset.item})}
+    function sel(){var ct=el.tagName==='TR'?'case':'estrategia';push('select_content','item_id: '+el.dataset.item);dl({event:'select_content',content_type:ct,item_id:el.dataset.item})}
     el.addEventListener('click',sel);el.addEventListener('keydown',function(e){if(e.key==='Enter')sel()});
   });
 
   document.querySelectorAll('.fire').forEach(function(b){
     b.addEventListener('click',function(){
       var txt=b.dataset.copy,eid='ld_'+rid();
-      function ok(){b.textContent='copiado ✓';b.classList.add('done');setTimeout(function(){b.textContent='copiar';b.classList.remove('done')},2000)}
+      function ok(){b.textContent='Copiado';b.classList.add('done');setTimeout(function(){b.textContent='Copiar';b.classList.remove('done')},2000)}
       function fb(){var v=b.parentNode.querySelector('.v');var r=document.createRange();r.selectNodeContents(v);var s=getSelection();s.removeAllRanges();s.addRange(r);ok()}
       try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}
-      push('generate_lead','method: '+b.dataset.ch+' · event_id: '+eid+' → GA4',{lead:1});
+      push('generate_lead','method: '+b.dataset.ch+' · event_id: '+eid,{lead:1});
       dl({event:'generate_lead',method:b.dataset.ch,event_id:eid});
-      setTimeout(function(){push('Lead','eventID: '+eid+' → Meta Pixel',{lead:1})},400);
+      setTimeout(function(){push('Lead (Meta Pixel)','eventID: '+eid,{lead:1})},400);
       kLead.textContent='sim';kLead.classList.add('y');
     });
   });
